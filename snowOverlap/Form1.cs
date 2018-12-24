@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Permissions;
+using Microsoft.Win32;
 
 namespace snowOverlap
 {
@@ -21,13 +23,25 @@ namespace snowOverlap
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
         public int[,] points = new int[150, 5];
-        int maxV = 5;
+        int maxV = 2;
         int maxW = 10;
         Bitmap bmp;
         Graphics g;
+        TrackBar maxSize, maxSpeed;
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                // turn on WS_EX_TOOLWINDOW style bit
+                cp.ExStyle |= 0x80;
+                return cp;
+            }
+        }
         public Form1()
         {
             InitializeComponent();
+            this.ShowInTaskbar = false;
             this.TransparencyKey = Color.Turquoise;
             this.BackColor = Color.Turquoise;
             int initialStyle = GetWindowLongPtr(this.Handle, -20);
@@ -37,21 +51,27 @@ namespace snowOverlap
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            notifyIcon1.Visible = true;
             this.TopMost = true;
             SetForegroundWindow(this.Handle);
             typeof(Panel).InvokeMember("DoubleBuffered",
             BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
             null, canvas, new object[] { true });
+            generatePoints();
+
+        }
+
+        public void generatePoints()
+        {
             Random rnd = new Random();
             for (int i = 0; i < points.GetLength(0); i++)
             {
                 points[i, 0] = rnd.Next(1, canvas.Width);
                 points[i, 1] = rnd.Next(1, canvas.Height);
-                points[i, 2] = rnd.Next(1, maxV);
-                points[i, 3] = rnd.Next(1, maxV);
-                points[i, 4] = rnd.Next(1, maxW);
+                points[i, 4] = rnd.Next(2, maxW);
+                points[i, 2] = rnd.Next(0, maxV);
+                points[i, 3] = rnd.Next(points[i, 4] - 2, points[i, 4] + 2);
             }
-
         }
 
         private void canvas_Paint(object sender, PaintEventArgs e)
@@ -89,5 +109,76 @@ namespace snowOverlap
             //canvas.BackgroundImage = bmp;
             this.Invalidate();
         }
+        // Urm wasnt expecting you to look down here, this isn't really that bad
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //e.Cancel = true;
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        
+
+        private void changeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var settings = new Form();
+            settings.FormBorderStyle = FormBorderStyle.FixedSingle;
+            settings.Icon = Properties.Resources.snowflake_7Qb_icon;
+            settings.BackColor = Color.DimGray;
+            settings.Width = 500;
+            settings.Height = 500;
+
+            maxSize = new TrackBar();
+            maxSize.BackColor = Color.DimGray;
+            maxSize.Maximum = 50;
+            maxSize.Minimum = 2;
+            maxSize.Width = 300;
+            maxSize.Value = 10;
+            maxSize.Location = new Point(100, 10);
+            maxSize.ValueChanged += maxSize_ValueChanged;
+
+            Label maxSizeLabel = new Label();
+            maxSizeLabel.Text = "Max Snow Size";
+            maxSizeLabel.Location = new Point(10, 15);
+            maxSizeLabel.ForeColor = Color.White;
+
+            maxSpeed = new TrackBar();
+            maxSpeed.BackColor = Color.DimGray;
+            maxSpeed.Maximum = 50;
+            maxSpeed.Minimum = 2;
+            maxSpeed.Width = 300;
+            maxSpeed.Value = 10;
+            maxSpeed.Location = new Point(100, 60);
+            maxSpeed.ValueChanged += maxSpeed_ValueChanged;
+
+            Label maxWindLabel = new Label();
+            maxWindLabel.Text = "Wind Speed";
+            maxWindLabel.Location = new Point(10, 65);
+            maxWindLabel.ForeColor = Color.White;
+
+
+            settings.Controls.Add(maxSizeLabel);
+            settings.Controls.Add(maxWindLabel);
+            settings.Controls.Add(maxSize);
+            settings.Controls.Add(maxSpeed);
+            settings.Show(this);
+        }
+
+        public void maxSize_ValueChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("close");
+            maxW = maxSize.Value;
+            generatePoints();
+        }
+
+        public void maxSpeed_ValueChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("close");
+            maxV = maxSpeed.Value;
+            generatePoints();
+        }
+
     }
 }

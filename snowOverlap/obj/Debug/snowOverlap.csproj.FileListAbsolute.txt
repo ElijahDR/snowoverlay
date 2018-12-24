@@ -8,3 +8,8 @@ C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.cspro
 C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.csproj.CoreCompileInputs.cache
 C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.exe
 C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.pdb
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.TrustInfo.xml
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.exe.manifest
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\bin\Debug\snowOverlap.exe.manifest
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\bin\Debug\snowOverlap.application
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.application
