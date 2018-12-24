@@ -1,0 +1,10 @@
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\bin\Debug\snowOverlap.exe.config
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\bin\Debug\snowOverlap.exe
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\bin\Debug\snowOverlap.pdb
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.csprojAssemblyReference.cache
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.Form1.resources
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.Properties.Resources.resources
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.csproj.GenerateResource.cache
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.csproj.CoreCompileInputs.cache
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.exe
+C:\Users\Elijah\source\repos\snowOverlap\snowOverlap\obj\Debug\snowOverlap.pdb
