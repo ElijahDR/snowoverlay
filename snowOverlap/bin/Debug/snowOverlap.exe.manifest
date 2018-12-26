@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="snowOverlap.exe" size="211456">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="snowOverlap.exe" size="212480">
       <assemblyIdentity name="snowOverlap" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>cCl0DKPX6Ug+ZRKg8t/ymtF2cP01v+CdOY7NqcGL7Co=</dsig:DigestValue>
+        <dsig:DigestValue>IogI1OBcQeA1gf4Wgx21t22rO7sWtYk6ORNcxiUHIJw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

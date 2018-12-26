@@ -25,9 +25,11 @@ namespace snowOverlap
         public int[,] points = new int[150, 5];
         int maxV = 2;
         int maxW = 10;
+        int maxG = 2;
         Bitmap bmp;
         Graphics g;
-        TrackBar maxSize, maxSpeed;
+        Form settings = new Form();
+        TrackBar maxSize, maxSpeed, maxGravity;
         protected override CreateParams CreateParams
         {
             get
@@ -59,6 +61,69 @@ namespace snowOverlap
             null, canvas, new object[] { true });
             generatePoints();
 
+            settings.FormBorderStyle = FormBorderStyle.FixedSingle;
+            settings.Icon = Properties.Resources.snowflake_7Qb_icon;
+            settings.BackColor = Color.DimGray;
+            settings.Width = 500;
+            settings.Height = 500;
+
+            maxSize = new TrackBar();
+            maxSize.BackColor = Color.DimGray;
+            maxSize.Maximum = 50;
+            maxSize.Minimum = 2;
+            maxSize.Width = 300;
+            maxSize.Value = 10;
+            maxSize.Location = new Point(100, 10);
+            maxSize.ValueChanged += maxSize_ValueChanged;
+
+            Label maxSizeLabel = new Label();
+            maxSizeLabel.Text = "Max Snow Size";
+            maxSizeLabel.Location = new Point(10, 15);
+            maxSizeLabel.ForeColor = Color.White;
+
+            maxSpeed = new TrackBar();
+            maxSpeed.BackColor = Color.DimGray;
+            maxSpeed.Maximum = 50;
+            maxSpeed.Minimum = 2;
+            maxSpeed.Width = 300;
+            maxSpeed.Value = 10;
+            maxSpeed.Location = new Point(100, 60);
+            maxSpeed.ValueChanged += maxSpeed_ValueChanged;
+
+            Label maxWindLabel = new Label();
+            maxWindLabel.Text = "Wind Speed";
+            maxWindLabel.Location = new Point(10, 65);
+            maxWindLabel.ForeColor = Color.White;
+
+            maxGravity = new TrackBar();
+            maxGravity.BackColor = Color.DimGray;
+            maxGravity.Maximum = 50;
+            maxGravity.Minimum = 0;
+            maxGravity.Width = 300;
+            maxGravity.Value = 10;
+            maxGravity.Location = new Point(100, 110);
+            maxGravity.ValueChanged += maxGravity_ValueChanged;
+
+            Label maxGravityLabel = new Label();
+            maxGravityLabel.Text = "Gravity";
+            maxGravityLabel.Location = new Point(10, 115);
+            maxGravityLabel.ForeColor = Color.White;
+
+
+            settings.Controls.Add(maxSizeLabel);
+            settings.Controls.Add(maxWindLabel);
+            settings.Controls.Add(maxSize);
+            settings.Controls.Add(maxSpeed);
+            settings.Controls.Add(maxGravity);
+            settings.Controls.Add(maxGravityLabel);
+            settings.FormClosing += settings_FormClosing;
+
+        }
+
+        public void settings_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            settings.Hide();
         }
 
         public void generatePoints()
@@ -70,7 +135,7 @@ namespace snowOverlap
                 points[i, 1] = rnd.Next(1, canvas.Height);
                 points[i, 4] = rnd.Next(2, maxW);
                 points[i, 2] = rnd.Next(0, maxV);
-                points[i, 3] = rnd.Next(points[i, 4] - 2, points[i, 4] + 2);
+                points[i, 3] = rnd.Next(points[i, 4] - 2, points[i, 4] + maxG);
             }
         }
 
@@ -117,52 +182,14 @@ namespace snowOverlap
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            //Application.Exit();
+            System.Environment.Exit(1);
         }
         
 
         private void changeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var settings = new Form();
-            settings.FormBorderStyle = FormBorderStyle.FixedSingle;
-            settings.Icon = Properties.Resources.snowflake_7Qb_icon;
-            settings.BackColor = Color.DimGray;
-            settings.Width = 500;
-            settings.Height = 500;
 
-            maxSize = new TrackBar();
-            maxSize.BackColor = Color.DimGray;
-            maxSize.Maximum = 50;
-            maxSize.Minimum = 2;
-            maxSize.Width = 300;
-            maxSize.Value = 10;
-            maxSize.Location = new Point(100, 10);
-            maxSize.ValueChanged += maxSize_ValueChanged;
-
-            Label maxSizeLabel = new Label();
-            maxSizeLabel.Text = "Max Snow Size";
-            maxSizeLabel.Location = new Point(10, 15);
-            maxSizeLabel.ForeColor = Color.White;
-
-            maxSpeed = new TrackBar();
-            maxSpeed.BackColor = Color.DimGray;
-            maxSpeed.Maximum = 50;
-            maxSpeed.Minimum = 2;
-            maxSpeed.Width = 300;
-            maxSpeed.Value = 10;
-            maxSpeed.Location = new Point(100, 60);
-            maxSpeed.ValueChanged += maxSpeed_ValueChanged;
-
-            Label maxWindLabel = new Label();
-            maxWindLabel.Text = "Wind Speed";
-            maxWindLabel.Location = new Point(10, 65);
-            maxWindLabel.ForeColor = Color.White;
-
-
-            settings.Controls.Add(maxSizeLabel);
-            settings.Controls.Add(maxWindLabel);
-            settings.Controls.Add(maxSize);
-            settings.Controls.Add(maxSpeed);
             settings.Show(this);
         }
 
@@ -173,10 +200,35 @@ namespace snowOverlap
             generatePoints();
         }
 
+        private void hideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (hideToolStripMenuItem.Text == "Hide")
+            {
+                this.Visible = false;
+                timer1.Stop();
+                timer2.Stop();
+                hideToolStripMenuItem.Text = "Show";
+            } else
+            {
+                this.Visible = true;
+                hideToolStripMenuItem.Text = "Hide";
+                timer1.Start();
+                timer2.Start();
+            }
+
+        }
+
         public void maxSpeed_ValueChanged(object sender, EventArgs e)
         {
             Console.WriteLine("close");
             maxV = maxSpeed.Value;
+            generatePoints();
+        }
+
+        public void maxGravity_ValueChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("close");
+            maxG = maxGravity.Value;
             generatePoints();
         }
 
